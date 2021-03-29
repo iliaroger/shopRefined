@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 export default function Navbar() {
   return (
     <React.Fragment>
-      <div className="flex justify-between border shadow-sm">
-        <div className="p-4 font-bold text-blue-700">
-          <p>Shekeyo</p>
+      <div className="flex justify-between border-b shadow-sm h-full">
+        <div className="p-5 font-bold text-blue-700">
+          <p>Shekeyo - Streetwear Inji</p>
         </div>
-        <div className="p-4 flex flex-row">
+        <div className="p-5 flex flex-row">
           <Link to="/" className="hover:underline px-2">
             Products
           </Link>
