@@ -1,12 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 export default function Navbar() {
+  const history = useHistory();
+
   return (
     <React.Fragment>
       <div className="flex justify-between border-b shadow-sm h-full">
         <div className="p-5 font-bold text-blue-700">
-          <p>Shekeyo - Streetwear Inji</p>
+          <p
+            className="select-none cursor-pointer"
+            onClick={() => history.push('/')}
+          >
+            Shekeyo - Streetwear Inji
+          </p>
         </div>
         <div className="p-5 flex flex-row">
           <Link to="/" className="hover:underline px-2">

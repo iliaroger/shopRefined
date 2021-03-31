@@ -67,14 +67,14 @@ export default function Products() {
                       addedToCart && clickedItem === el.key
                         ? 'opacity-100'
                         : 'opacity-0'
-                    } transition duration-200`}
+                    } transition duration-200 z-10`}
                   >
                     <p className="text-center text-white">Added to your cart</p>
                   </div>
                   <img
                     src={el.image}
                     alt="adidas shoe zx4000"
-                    className="h-40 object-cover select-none"
+                    className="h-40 object-cover -translate-y-6 select-none"
                   ></img>
                   <h2 className="mx-auto font-bold mt-1 text-lg text-blue-700">
                     {el.name}
@@ -83,7 +83,7 @@ export default function Products() {
                   {el.available ? (
                     <p className="mx-auto text-sm text-green-400">In Stock</p>
                   ) : (
-                    <p className="mx-auto text-sm text-red-400">Not in Stock</p>
+                    <p className="mx-auto text-sm text-red-400">Out of Stock</p>
                   )}
                   <hr className="w-8 mx-auto m-1"></hr>
                   <p className="mx-auto text-gray-600 text-sm">
@@ -95,8 +95,10 @@ export default function Products() {
                       el.available
                         ? 'border-gray-600'
                         : 'border-gray-400 text-gray-400'
-                    }  w-1/2 self-center mt-2 border-gray-400 rounded-sm p-1 select-none text-sm`}
-                    disabled={!el.available}
+                    } ${
+                      clickCooloff ? 'cursor-wait' : ''
+                    } w-1/2 self-center mt-2 border-gray-400 rounded-sm p-1 select-none text-sm`}
+                    disabled={!el.available || clickCooloff}
                     onClick={() => addToCartAnimation(el)}
                   >
                     {el.available ? 'Add to cart' : 'Unavailable'}
