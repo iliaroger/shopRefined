@@ -1,8 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import ProductList from '../products';
+import FilterProducts from '../components/FilterProducts';
 
 export default function Products() {
-  const [loaded, setLoading] = useState(false);
-  const allItems = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+  const [loaded, setLoading] = useState<boolean>(false);
+  const [addedToCart, setAddedToCart] = useState<boolean>(false);
+  const [clickedItem, setClickedItem] = useState<number>(0);
+  const [clickCooloff, setClickCooloff] = useState<boolean>(false);
+
+  interface IProductItem {
+    name: string;
+    available: boolean;
+    collection: string;
+    image: string;
+    price: number;
+    key: number;
+  }
 
   useEffect(() => {
     setTimeout(() => {
@@ -10,11 +23,28 @@ export default function Products() {
     }, 1500);
   }, []);
 
+  const addToCartAnimation = (el: IProductItem) => {
+    if (clickCooloff) return;
+    if (!el.available) return;
+    setClickedItem(el.key);
+    setAddedToCart(true);
+    setClickCooloff(true);
+    setTimeout(() => {
+      setAddedToCart(false);
+      setClickCooloff(false);
+    }, 1000);
+  };
+
   return (
     <React.Fragment>
-      <div className="flex flex-row flex-wrap border-b ">
+      <FilterProducts></FilterProducts>
+      <div
+        className={`flex flex-row flex-wrap border-b h-full ${
+          clickCooloff ? 'cursor-wait' : 'null'
+        }`}
+      >
         {!loaded
-          ? allItems.map(() => {
+          ? ProductList.map(() => {
               return (
                 <div className="flex flex-col h-80 w-1/6 m-6 border shadow">
                   <div className="h-40 w-full mx-auto bg-gray-200 animate-pulse"></div>
@@ -26,25 +56,50 @@ export default function Products() {
                 </div>
               );
             })
-          : allItems.map(() => {
+          : ProductList.map((el) => {
               return (
-                <div className="flex flex-col h-80 w-1/6 m-6 border hover:border hover:border-blue-700 transition duration-200 shadow">
+                <div
+                  className="flex flex-col relative h-80 w-1/6 m-6 border hover:border hover:border-blue-700 transition duration-200 shadow"
+                  key={el.key}
+                >
+                  <div
+                    className={`absolute mr-2 top-0 w-full bg-blue-600 ${
+                      addedToCart && clickedItem === el.key
+                        ? 'opacity-100'
+                        : 'opacity-0'
+                    } transition duration-200`}
+                  >
+                    <p className="text-center text-white">Added to your cart</p>
+                  </div>
                   <img
-                    src="https://i0.wp.com/cultedge.com/wp-content/uploads/2019/06/adidas-ZX4000-4D-BD7927-003-0033.jpg"
+                    src={el.image}
                     alt="adidas shoe zx4000"
-                    className="w-full select-none"
+                    className="h-40 object-cover select-none"
                   ></img>
                   <h2 className="mx-auto font-bold mt-1 text-lg text-blue-700">
-                    Adidas ZX4000
+                    {el.name}
                   </h2>
-                  <p className="mx-auto text-sm text-green-400">In Stock</p>
+
+                  {el.available ? (
+                    <p className="mx-auto text-sm text-green-400">In Stock</p>
+                  ) : (
+                    <p className="mx-auto text-sm text-red-400">Not in Stock</p>
+                  )}
                   <hr className="w-8 mx-auto m-1"></hr>
                   <p className="mx-auto text-gray-600 text-sm">
-                    Jzen Keo Collection
+                    {`${el.collection} Collection`}
                   </p>
-                  <p className="mx-auto">129,99€</p>
-                  <button className="border border-gray-600 w-1/2 self-center mt-2 border-gray-400 rounded-sm p-1 select-none text-sm">
-                    Add to cart
+                  <p className="mx-auto">{`${el.price}€`}</p>
+                  <button
+                    className={`border ${
+                      el.available
+                        ? 'border-gray-600'
+                        : 'border-gray-400 text-gray-400'
+                    }  w-1/2 self-center mt-2 border-gray-400 rounded-sm p-1 select-none text-sm`}
+                    disabled={!el.available}
+                    onClick={() => addToCartAnimation(el)}
+                  >
+                    {el.available ? 'Add to cart' : 'Unavailable'}
                   </button>
                 </div>
               );

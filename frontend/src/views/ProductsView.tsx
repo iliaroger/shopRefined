@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 export default function ProductsView() {
   return (
     <React.Fragment>
-      <div className="flex flex-col h-screen w-full">
+      <div className="flex flex-col w-full">
         <div className="h-16">
           <Navbar></Navbar>
         </div>
