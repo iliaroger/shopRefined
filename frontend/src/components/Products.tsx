@@ -1,32 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import ProductList from '../products';
 import FilterProducts from '../components/FilterProducts';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProductsAction } from '../actions/productsAction';
 
 export default function Products() {
-  const [loaded, setLoading] = useState<boolean>(false);
   const [addedToCart, setAddedToCart] = useState<boolean>(false);
-  const [clickedItem, setClickedItem] = useState<number>(0);
+  const [clickedItem, setClickedItem] = useState<string>('');
   const [clickCooloff, setClickCooloff] = useState<boolean>(false);
+  const dispatch = useDispatch();
+  let { loading, products }: DestructuredData = useSelector(
+    (state: FetchState) => state.productsReducer
+  );
 
-  interface IProductItem {
+  interface ProductItem {
     name: string;
-    available: boolean;
-    collection: string;
+    available: Boolean;
     image: string;
     price: number;
-    key: number;
+    productCollection: string;
+    _id: string;
+  }
+
+  interface FetchState {
+    productsReducer: DestructuredData;
+  }
+
+  interface DestructuredData {
+    loading: Boolean;
+    products: {
+      name: string;
+      available: Boolean;
+      image: string;
+      price: number;
+      productCollection: string;
+      _id: string;
+    }[];
   }
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoading(true);
-    }, 1500);
-  }, []);
+    dispatch(fetchProductsAction);
+  }, [dispatch]);
 
-  const addToCartAnimation = (el: IProductItem) => {
+  const addToCartAnimation = (el: any) => {
     if (clickCooloff) return;
     if (!el.available) return;
-    setClickedItem(el.key);
+    setClickedItem(el._id);
     setAddedToCart(true);
     setClickCooloff(true);
     setTimeout(() => {
@@ -43,8 +61,8 @@ export default function Products() {
           clickCooloff ? 'cursor-wait' : 'null'
         }`}
       >
-        {!loaded
-          ? ProductList.map(() => {
+        {loading
+          ? Array.from(Array(10).keys()).map(() => {
               return (
                 <div className="flex flex-col h-80 w-1/6 m-6 border shadow">
                   <div className="h-40 w-full mx-auto bg-gray-200 animate-pulse"></div>
@@ -56,15 +74,15 @@ export default function Products() {
                 </div>
               );
             })
-          : ProductList.map((el) => {
+          : products.map((el: ProductItem) => {
               return (
                 <div
                   className="flex flex-col relative h-80 w-1/6 m-6 border hover:border hover:border-blue-700 transition duration-200 shadow"
-                  key={el.key}
+                  key={el._id}
                 >
                   <div
                     className={`absolute mr-2 top-0 w-full bg-blue-600 ${
-                      addedToCart && clickedItem === el.key
+                      addedToCart && clickedItem === el._id
                         ? 'opacity-100'
                         : 'opacity-0'
                     } transition duration-200 z-10`}
@@ -87,7 +105,7 @@ export default function Products() {
                   )}
                   <hr className="w-8 mx-auto m-1"></hr>
                   <p className="mx-auto text-gray-600 text-sm">
-                    {`${el.collection} Collection`}
+                    {`${el.productCollection} Collection`}
                   </p>
                   <p className="mx-auto">{`${el.price}€`}</p>
                   <button

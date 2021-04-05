@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ProfileLogin from '../components/ProfileLogin';
 import ProfileSignIn from '../components/ProfileSignIn';
-import { ToggleProvider } from '../context/Context';
+import { ToggleProvider } from '../context/ProfileContext';
 
 export default function Profile() {
   const [currentView, setCurrentView] = useState('login');

@@ -6,9 +6,11 @@ const AllProducts = require('../seed/products.json');
 const productsRouter = express.Router();
 
 productsRouter.get(
-  '/api/getProducts',
+  '/api/fetchProducts',
   expressAsyncHandler(async (req, res) => {
-    res.status(201).send('products fetched');
+    await Products.find({}, (err, users) => {
+      res.send(users);
+    });
   })
 );
 
@@ -16,7 +18,8 @@ productsRouter.post(
   '/api/seed',
   expressAsyncHandler(async (req, res) => {
     try {
-      const seedProducts = await Products.insertMany(AllProducts, (err) => {
+      await Products.deleteMany();
+      await Products.insertMany(AllProducts, (err) => {
         res.send('inserted products');
       });
     } catch (err) {}

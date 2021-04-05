@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { toggleContext } from '../context/Context';
+import { toggleContext } from '../context/ProfileContext';
 
 export default function ProfileSignIn() {
   const [activeGender, setActiveGender] = useState<string>('none');
