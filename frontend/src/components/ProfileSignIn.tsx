@@ -1,10 +1,38 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { toggleContext } from '../context/ProfileContext';
+import { userRegisterAction } from '../actions/registerUserAction';
+import { useDispatch } from 'react-redux';
 
 export default function ProfileSignIn() {
-  const [activeGender, setActiveGender] = useState<string>('none');
+  const [activeGender, setActiveGender] = useState<string>('');
   const [ageChecked, setAgeChecked] = useState<boolean>(false);
   const { changeState } = useContext(toggleContext);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [pw1, setPw1] = useState('');
+  const [pw2, setPw2] = useState('');
+  const dispatch = useDispatch();
+
+  const postRegister = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    e.preventDefault();
+    if (
+      activeGender !== '' &&
+      ageChecked &&
+      !checkEmptyName() &&
+      checkPasswords()
+    ) {
+    }
+  };
+
+  const checkEmptyName = (): boolean => {
+    if ((firstName && lastName) === '') return true;
+    else return false;
+  };
+
+  const checkPasswords = (): boolean => {
+    if (pw1 === pw2 && pw1 && pw2 !== '') return true;
+    else return false;
+  };
 
   return (
     <div className="flex flex-row h-full w-full justify-center items-center">
@@ -12,7 +40,6 @@ export default function ProfileSignIn() {
         <h1 className="text-3xl text-center font-semibold mb-8">
           Create a new account 👋
         </h1>
-        {/* <hr className="w-1/4 mx-auto"></hr> */}
         <form>
           <label className="font-semibold text-lg">
             Gender <span className="text-red-600">*</span>
@@ -63,13 +90,25 @@ export default function ProfileSignIn() {
               <label className="font-semibold text-lg">
                 Name <span className="text-red-600">*</span>
               </label>
-              <input type="text" className="border rounded shadow p-1"></input>
+              <input
+                type="text"
+                className="border rounded shadow p-1"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setFirstName(e.target.value);
+                }}
+              ></input>
             </div>
             <div className="flex flex-col w-1/2 ml-1">
               <label className="font-semibold text-lg">
                 Last Name <span className="text-red-600">*</span>
               </label>
-              <input type="text" className="border shadow rounded p-1"></input>
+              <input
+                type="text"
+                className="border shadow rounded p-1"
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setLastName(e.target.value);
+                }}
+              ></input>
             </div>
           </div>
           <div className="flex flex-col mb-4">
@@ -85,6 +124,9 @@ export default function ProfileSignIn() {
             <input
               type="password"
               className="border rounded shadow p-1"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setPw1(e.target.value)
+              }
             ></input>
           </div>
           <div className="flex flex-col mb-4">
@@ -94,6 +136,9 @@ export default function ProfileSignIn() {
             <input
               type="password"
               className="border shadow rounded p-1"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setPw2(e.target.value);
+              }}
             ></input>
           </div>
           <div className="flex flex-row items-center mt-2 mb-2">
@@ -110,7 +155,12 @@ export default function ProfileSignIn() {
             </label>
           </div>
           <div className="text-center mt-6 mb-4">
-            <button className="border w-full text-white bg-blue-600 p-3 rounded border-transparent cursor-pointer">
+            <button
+              className="border w-full text-white bg-blue-600 p-3 rounded border-transparent cursor-pointer"
+              onClick={(e) => {
+                postRegister(e);
+              }}
+            >
               Sign Up
             </button>
           </div>

@@ -62,9 +62,12 @@ export default function Products() {
         }`}
       >
         {loading
-          ? Array.from(Array(10).keys()).map(() => {
+          ? Array.from(Array(10).keys()).map((i) => {
               return (
-                <div className="flex flex-col h-80 w-1/6 m-6 border shadow">
+                <div
+                  className="flex flex-col h-80 w-1/6 m-6 border shadow"
+                  key={i}
+                >
                   <div className="h-40 w-full mx-auto bg-gray-200 animate-pulse"></div>
                   <div className="h-8 w-40 mx-auto mt-2 bg-gray-200 animate-pulse"></div>
                   <div className="h-4 w-20 mx-auto mt-1 bg-gray-200 animate-pulse"></div>
@@ -74,11 +77,11 @@ export default function Products() {
                 </div>
               );
             })
-          : products.map((el: ProductItem) => {
+          : products.map((el: ProductItem, i) => {
               return (
                 <div
                   className="flex flex-col relative h-80 w-1/6 m-6 border hover:border hover:border-blue-700 transition duration-200 shadow"
-                  key={el._id}
+                  key={`${el._id}`}
                 >
                   <div
                     className={`absolute mr-2 top-0 w-full bg-blue-600 ${

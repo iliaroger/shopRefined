@@ -4,7 +4,7 @@ import {
   SUCCESS_PRODUCTS,
 } from '../constants/productsConstants';
 
-export const fetchProducts = (
+export const fetchProductsReducer = (
   state = { loading: false, products: [{}] },
   action: any
 ) => {
