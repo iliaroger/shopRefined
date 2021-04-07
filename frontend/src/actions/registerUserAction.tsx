@@ -16,13 +16,12 @@ interface FormData {
   password: string;
 }
 
-export const userRegisterAction = async (dispatch: any) => (data: FormData) => {
+export const userRegisterAction = (data: FormData) => async (dispatch: any) => {
   dispatch({
     type: REQUEST_USER_REGISTER,
   });
-
   try {
-    axios
+    await axios
       .post('/api/register', {
         gender: data.gender,
         firstName: data.firstName,

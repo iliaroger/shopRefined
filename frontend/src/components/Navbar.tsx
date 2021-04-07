@@ -15,7 +15,7 @@ export default function Navbar() {
             Shekeyo - Streetwear Inji
           </p>
         </div>
-        <div className="p-5 flex flex-row">
+        <div className="p-5 flex flex-row z-20">
           <Link to="/" className="hover:underline px-2">
             Products
           </Link>
