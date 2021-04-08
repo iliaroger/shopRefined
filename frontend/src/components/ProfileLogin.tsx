@@ -1,9 +1,16 @@
 import React, { useState, useContext } from 'react';
 import { toggleContext } from '../context/ProfileContext';
+import { useDispatch } from 'react-redux';
+import LoginUserAction from '../actions/loginUserAction';
 
 export default function ProfileLogin() {
   const [rememberBox, setRememberBox] = useState<boolean>(false);
   const { changeState } = useContext(toggleContext);
+  const dispatch = useDispatch();
+
+  // add login form input check, dispatch login user data, get user data from server and update navbar
+
+  const loginUser = () => {};
 
   return (
     <div className="flex flex-col w-2/6">

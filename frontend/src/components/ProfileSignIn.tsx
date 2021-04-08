@@ -4,7 +4,7 @@ import { userRegisterAction } from '../actions/registerUserAction';
 import { useDispatch } from 'react-redux';
 import NotificationWarning from '../components/NotificationWarning';
 import { setTimeout } from 'timers';
-import { useSelector } from 'react-redux';
+import NotificationSuccess from '../components/NotificationSuccess';
 
 export default function ProfileSignIn() {
   const [activeGender, setActiveGender] = useState<string>('');
@@ -16,8 +16,8 @@ export default function ProfileSignIn() {
   const [pw1, setPw1] = useState('');
   const [pw2, setPw2] = useState('');
   const [notificationWarning, setNotificationWarning] = useState(false);
+  const [notificationSuccess, setNotificationSuccess] = useState(false);
   const dispatch = useDispatch();
-  const { data } = useSelector((state: any) => state.registerReducer);
 
   const postRegister = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
     e.preventDefault();
@@ -37,12 +37,21 @@ export default function ProfileSignIn() {
           password: pw1,
         })
       );
-      if (data.data.status === 'success') {
-        alert('success');
-      }
+      resetInputFields();
+      notificationSuccessTrigger();
     } else {
-      notificationTrigger();
+      notificationWarningTrigger();
     }
+  };
+
+  const resetInputFields = () => {
+    setAgeChecked(false);
+    setActiveGender('');
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPw1('');
+    setPw2('');
   };
 
   const checkEmail = () => {
@@ -50,10 +59,17 @@ export default function ProfileSignIn() {
     else return false;
   };
 
-  const notificationTrigger = () => {
+  const notificationWarningTrigger = () => {
     setNotificationWarning(true);
     setTimeout(() => {
       setNotificationWarning(false);
+    }, 3000);
+  };
+
+  const notificationSuccessTrigger = () => {
+    setNotificationSuccess(true);
+    setTimeout(() => {
+      setNotificationSuccess(false);
     }, 3000);
   };
 
@@ -73,6 +89,12 @@ export default function ProfileSignIn() {
         <NotificationWarning animation={true}></NotificationWarning>
       ) : (
         <NotificationWarning animation={false}></NotificationWarning>
+      )}
+
+      {notificationSuccess ? (
+        <NotificationSuccess animation={true}></NotificationSuccess>
+      ) : (
+        <NotificationSuccess animation={false}></NotificationSuccess>
       )}
 
       <div className="flex flex-row h-full w-full justify-center items-center">
@@ -137,6 +159,7 @@ export default function ProfileSignIn() {
                     setFirstName(e.target.value);
                   }}
                   placeholder={'Leeroy'}
+                  value={firstName}
                 ></input>
               </div>
               <div className="flex flex-col w-1/2 ml-1">
@@ -150,6 +173,7 @@ export default function ProfileSignIn() {
                     setLastName(e.target.value);
                   }}
                   placeholder={'Jenkins'}
+                  value={lastName}
                 ></input>
               </div>
             </div>
@@ -164,6 +188,7 @@ export default function ProfileSignIn() {
                   setEmail(e.target.value)
                 }
                 placeholder={'plan@justrush.com'}
+                value={email}
               ></input>
             </div>
             <div className="flex flex-col mb-4">
@@ -176,6 +201,7 @@ export default function ProfileSignIn() {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setPw1(e.target.value)
                 }
+                value={pw1}
               ></input>
             </div>
             <div className="flex flex-col mb-4">
@@ -188,6 +214,7 @@ export default function ProfileSignIn() {
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   setPw2(e.target.value);
                 }}
+                value={pw2}
               ></input>
             </div>
             <div className="flex flex-row items-center mt-2 mb-2">

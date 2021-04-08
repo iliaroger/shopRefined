@@ -1,9 +1,6 @@
 import {
-  FAIL_USER_LOGIN,
   FAIL_USER_REGISTER,
-  REQUEST_USER_LOGIN,
   REQUEST_USER_REGISTER,
-  SUCCESS_USER_LOGIN,
   SUCCESS_USER_REGISTER,
 } from '../constants/userConstants';
 import axios from 'axios';

@@ -7,7 +7,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 const ProductsHandlers = require('./routes/getProducts.js');
-const UserHandlers = require('./routes/postUser.js');
+const UserRegisterHandlers = require('./routes/registerUser.js');
+const UserLoginHandlers = require('./routes/userLogin.js');
 
 mongoose
   .connect(process.env.MONGODB_URI, {
@@ -31,7 +32,9 @@ app.use(bodyParser.json());
 
 app.use(ProductsHandlers);
 
-app.use(UserHandlers);
+app.use(UserRegisterHandlers);
+
+app.use(UserLoginHandlers);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
