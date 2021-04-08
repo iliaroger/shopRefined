@@ -6,9 +6,8 @@ import {
 
 import axios from 'axios';
 
-const loginUserAction = (dispatch: any) => async (
-  email: string,
-  password: string
+export const loginUserAction = (email: string, password: string) => async (
+  dispatch: any
 ) => {
   dispatch({
     type: REQUEST_USER_LOGIN,
@@ -32,5 +31,3 @@ const loginUserAction = (dispatch: any) => async (
     });
   }
 };
-
-export default loginUserAction;

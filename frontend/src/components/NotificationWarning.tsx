@@ -1,5 +1,6 @@
 interface PropsType {
   animation: boolean;
+  notificationMessage: string;
 }
 
 const NotificationWarning = (props: PropsType) => {
@@ -39,7 +40,7 @@ const NotificationWarning = (props: PropsType) => {
             Check your provided informations
           </p>
           <p className="text-sm text-gray-600 dark:text-gray-400 font-normal">
-            A problem occured while creating a new user account.
+            {props.notificationMessage}
           </p>
         </div>
       </div>

@@ -86,9 +86,15 @@ export default function ProfileSignIn() {
   return (
     <React.Fragment>
       {notificationWarning ? (
-        <NotificationWarning animation={true}></NotificationWarning>
+        <NotificationWarning
+          animation={true}
+          notificationMessage="A problem occured while creating a new user account."
+        ></NotificationWarning>
       ) : (
-        <NotificationWarning animation={false}></NotificationWarning>
+        <NotificationWarning
+          animation={false}
+          notificationMessage="A problem occured while creating a new user account."
+        ></NotificationWarning>
       )}
 
       {notificationSuccess ? (
