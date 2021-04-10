@@ -3,7 +3,6 @@ import { toggleContext } from '../context/ProfileContext';
 import { useDispatch } from 'react-redux';
 import { loginUserAction } from '../actions/loginUserAction';
 import NotificationWarning from '../components/NotificationWarning';
-import NotificationSuccess from '../components/NotificationSuccess';
 
 export default function ProfileLogin() {
   const [rememberBox, setRememberBox] = useState<boolean>(false);

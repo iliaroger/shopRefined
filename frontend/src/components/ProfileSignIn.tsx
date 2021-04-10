@@ -98,9 +98,17 @@ export default function ProfileSignIn() {
       )}
 
       {notificationSuccess ? (
-        <NotificationSuccess animation={true}></NotificationSuccess>
+        <NotificationSuccess
+          animation={true}
+          headerText="Registration completed!"
+          subText="You have successfully created an account!"
+        ></NotificationSuccess>
       ) : (
-        <NotificationSuccess animation={false}></NotificationSuccess>
+        <NotificationSuccess
+          animation={false}
+          headerText="Registration completed!"
+          subText="You have successfully created an account!"
+        ></NotificationSuccess>
       )}
 
       <div className="flex flex-row h-full w-full justify-center items-center">

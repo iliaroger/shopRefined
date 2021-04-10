@@ -1,5 +1,7 @@
 interface PropsType {
   animation: boolean;
+  headerText: string;
+  subText: string;
 }
 
 const NotificationSuccess = (props: PropsType) => {
@@ -36,10 +38,10 @@ const NotificationSuccess = (props: PropsType) => {
         </div>
         <div className="flex flex-col justify-center pl-4 sm:w-9/12 sm:pt-6 pb-6 pt-2">
           <p className="text-lg text-gray-800 dark:text-gray-100 font-semibold pb-1">
-            Registration completed!
+            {props.headerText}
           </p>
           <p className="text-sm text-gray-600 dark:text-gray-400 font-normal">
-            You can now login to access the website. Enjoy!
+            {props.subText}
           </p>
         </div>
       </div>

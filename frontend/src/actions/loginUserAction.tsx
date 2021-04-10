@@ -2,6 +2,7 @@ import {
   FAIL_USER_LOGIN,
   REQUEST_USER_LOGIN,
   SUCCESS_USER_LOGIN,
+  USER_LOGGED_IN,
 } from '../constants/userConstants';
 
 import axios from 'axios';
@@ -30,4 +31,23 @@ export const loginUserAction = (email: string, password: string) => async (
       payload: err,
     });
   }
+};
+
+export const setUserAction = (
+  status: string,
+  firstName: string,
+  lastName: string,
+  email: string,
+  gender: string
+) => (dispatch: any) => {
+  dispatch({
+    type: USER_LOGGED_IN,
+    payload: {
+      status,
+      firstName,
+      lastName,
+      email,
+      gender,
+    },
+  });
 };

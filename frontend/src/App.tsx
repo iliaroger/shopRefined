@@ -17,8 +17,11 @@ function App() {
           <Route path="/cart" exact>
             <CartView></CartView>
           </Route>
-          <Route path="/profile">
+          <Route path="/profile" exact>
             <LoginView></LoginView>
+          </Route>
+          <Route path="/profile/settings" exact>
+            <h2>User Settings</h2>
           </Route>
           <Route path="*">
             <NotFound></NotFound>
