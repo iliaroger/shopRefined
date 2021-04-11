@@ -29,7 +29,7 @@ export const userLoginReducer = (
 };
 
 export const manageUserReducer = (
-  state = { status: 'error', user: {} },
+  state = { status: 'error', user: {}, userLoggedIn: false },
   action: any
 ) => {
   switch (action.type) {

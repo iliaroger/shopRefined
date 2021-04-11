@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import NotificationSuccess from '../components/NotificationSuccess';
+import { userLoggedInAction } from '../actions/notificationsAction';
 
 export default function UserDashboard() {
   const history = useHistory();
   const userData = useSelector((state: any) => state.manageUserReducer);
+  const { initLogin } = useSelector((state: any) => state.notificationsReducer);
   const [successNotification, setSuccessNotification] = useState(false);
+  const dispatch = useDispatch();
 
   const triggerSuccessNotification = () => {
     setSuccessNotification(true);
@@ -16,10 +19,12 @@ export default function UserDashboard() {
   };
 
   useEffect(() => {
-    if (!successNotification) {
+    console.log(initLogin);
+    if (!initLogin) {
       triggerSuccessNotification();
+      dispatch(userLoggedInAction());
     }
-  }, [userData]);
+  }, []);
 
   return (
     <React.Fragment>

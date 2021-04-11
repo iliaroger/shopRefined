@@ -1,0 +1,1 @@
+export const USER_INIT_LOGIN = 'USER_INIT_LOGIN';

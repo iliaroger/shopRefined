@@ -3,15 +3,17 @@ import thunk from 'redux-thunk';
 import { fetchProductsReducer } from '../reducers/productsReducer';
 import { registerReducer } from '../reducers/registerReducer';
 import { userLoginReducer, manageUserReducer } from '../reducers/loginReducer';
+import { notificationsReducer } from '../reducers/notificationsReducer';
 
 // init state
 const initState = {};
 
 const reducer = combineReducers({
   productsReducer: fetchProductsReducer,
-  registerReducer: registerReducer,
-  userLoginReducer: userLoginReducer,
-  manageUserReducer: manageUserReducer,
+  registerReducer,
+  userLoginReducer,
+  manageUserReducer,
+  notificationsReducer,
 });
 const composeEnhancer = window.__Redux_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
